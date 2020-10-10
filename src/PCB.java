@@ -45,11 +45,22 @@ public class PCB{
         this.priority = priority;
     }
 
-    public PCB(int pid, String processName, int state, int runTime, int priority) {
+    public PCB(int pid, String processName,int state, int runTime, int priority) {
         this.pid = pid;
         this.processName = processName;
         this.state = state;
         this.runTime = runTime;
         this.priority = priority;
+    }
+
+    @Override
+    public String toString() {
+        return "PCB{" +
+                "pid=" + pid +
+                ", processName='" + processName + '\'' +
+                ", state=" + state +
+                ", runTime=" + runTime +
+                ", priority=" + priority +
+                '}';
     }
 }

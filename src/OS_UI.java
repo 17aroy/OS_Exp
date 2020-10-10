@@ -73,6 +73,12 @@ public class OS_UI extends JFrame{
         item31=new JMenuItem("进程状态转换");
         item32=new JMenuItem("生产者-消费者");
         item33=new JMenuItem("进程调度");
+        item33.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Process_UI();
+            }
+        });
         item34=new JMenuItem("银行家算法");
         item41=new JMenuItem("动态分区分配算法");
         item42=new JMenuItem("页面置换算法");
