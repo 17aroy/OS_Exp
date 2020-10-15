@@ -55,54 +55,15 @@ public class PSA {
         this.dieList = dieList;
     }
 
-/*
-    public void run(){
-        PCB pcb;
-        for (int i = 0; i < pcbs.length; i++) {
-            if (pcbs[i].state!=2){
-                readyList.add(pcbs[i]);
-            } else {
-                blockList.add(pcbs[i]);
-            }
-        }
-        while (!readyList.isEmpty()){
-            readyList.get(0).state=new Random().nextInt(3)+1;
-            if (readyList.get(0).state!=2&&readyList.get(0).runTime!=0){
-                System.out.println(readyList.get(0));
-                readyList.get(0).priority--;
-                readyList.get(0).runTime--;
-                pcb=readyList.get(0);
-                readyList.remove(0);
-                readyList.add(pcb);
-                if (!blockList.isEmpty()){
-                    blockList.get(0).state=new Random().nextInt(3)+1;
-                    if (blockList.get(0).state!=2){
-                        readyList.add(blockList.get(0));
-                        blockList.remove(0);
-                    }
-                }
-                Comparator cmp=new pcbComparator();
-                Arrays.sort(pcbs,cmp);
-            } else if (readyList.get(0).runTime!=0){
-                blockList.add(readyList.get(0));
-                readyList.remove(0);
-            } else {
-                dieList.add(readyList.get(0));
-                readyList.remove(0);
-            }
-        }
-
-    }
-*/
-
     public void start(){
         for (int i = 0; i < 10; i++) {
-            if (pcbs[i].state==1){
+            if (pcbs[i].state==1) {
                 readyList.add(pcbs[i]);
             } else {
                 blockList.add(pcbs[i]);
             }
         }
+
     }
     public void readyRun(){
         readyList.get(0).priority--;
@@ -110,10 +71,26 @@ public class PSA {
         readyList.get(0).state=new Random().nextInt(2)+1;
     }
 
-    public void blockRun(){
-        blockList.get(0).priority--;
-        blockList.get(0).runTime--;
-        blockList.get(0).state=new Random().nextInt(2)+1;
+    public void addReady(){
+        if (blockList.get(0).state==1) {
+            readyList.add(blockList.get(0));
+            blockList.remove(0);
+        }
+    }
+
+    public void addDie(){
+        dieList.add(readyList.get(0));
+        readyList.remove(0);
+    }
+    public void addBlock(){
+        readyList.get(0).state=new Random().nextInt(2)+1;
+        blockList.add(readyList.get(0));
+        readyList.remove(0);
+    }
+
+    public String[] getReadyString(int i){
+        String str[]=new String[]{readyList.get(i).processName, String.valueOf(readyList.get(i).pid), String.valueOf(readyList.get(i).runTime), String.valueOf(readyList.get(i).priority), String.valueOf(readyList.get(i).state)};
+        return str;
     }
 
    /* public static void main(String[] args) {
