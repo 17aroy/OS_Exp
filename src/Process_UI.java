@@ -25,10 +25,9 @@ public class Process_UI extends JFrame {
         this.add(jToolBar, BorderLayout.NORTH);	//添加工具条
 
         columnNames= new String[]{"名称", "PID","时间片", "优先级", "状态"};
-        /*tableValues=new String[][]{{"A","2","22","222","T"},{"B","3","33","333","F"},{"C","4","44","444","T"}};*/
-        Data data=new Data();
-        Thread thread=new Thread(data);
-        thread.start();
+        tableValues=new String[][]{{"A","2","22","222","T"},{"B","3","33","333","F"},{"C","4","44","444","T"}};
+
+        PSA psa=new PSA();
 
         jTable=new JTable(tableValues,columnNames);
         jScrollPane=new JScrollPane(jTable);
@@ -38,17 +37,12 @@ public class Process_UI extends JFrame {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
-    class Data implements Runnable{
-        PSA psa=new PSA();
-        @Override
-        public void run() {
-            psa.run();
-
-            for (int i = 0; i < psa.readyList.size(); i++) {
-                tableValues[i]=new String[]{psa.readyList.get(0).processName,String.valueOf(psa.readyList.get(0).pid),String.valueOf(psa.readyList.get(0).runTime),String.valueOf(psa.readyList.get(0).priority),String.valueOf(psa.readyList.get(0).state)};
-            }
-        }
+    public void run(PSA psa){
+        if (psa.pcbs[0].state==1){
+            psa.readyRun();
+        } 
     }
+
+
 
 }

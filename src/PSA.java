@@ -14,6 +14,7 @@ public class PSA {
         setReadyList(new ArrayList<>());
         setBlockList(new ArrayList<>());
         setDieList(new ArrayList<>());
+        start();
     }
 
     public PCB[] getPcbs() {
@@ -24,7 +25,7 @@ public class PSA {
         this.pcbs=pcbs;
 
         for (int i = 0; i < 10; i++) {
-            pcbs[i]=new PCB(i,"进程"+String.valueOf(i),new Random().nextInt(3)+1,new Random().nextInt(5)+1,new Random().nextInt(10)+5);
+            pcbs[i]=new PCB(i,"进程"+String.valueOf(i),new Random().nextInt(2)+1,new Random().nextInt(5)+1,new Random().nextInt(10)+5);
         }
         Comparator cmp=new pcbComparator();
         Arrays.sort(pcbs,cmp);
@@ -54,6 +55,7 @@ public class PSA {
         this.dieList = dieList;
     }
 
+/*
     public void run(){
         PCB pcb;
         for (int i = 0; i < pcbs.length; i++) {
@@ -90,6 +92,28 @@ public class PSA {
             }
         }
 
+    }
+*/
+
+    public void start(){
+        for (int i = 0; i < 10; i++) {
+            if (pcbs[i].state==1){
+                readyList.add(pcbs[i]);
+            } else {
+                blockList.add(pcbs[i]);
+            }
+        }
+    }
+    public void readyRun(){
+        readyList.get(0).priority--;
+        readyList.get(0).runTime--;
+        readyList.get(0).state=new Random().nextInt(2)+1;
+    }
+
+    public void blockRun(){
+        blockList.get(0).priority--;
+        blockList.get(0).runTime--;
+        blockList.get(0).state=new Random().nextInt(2)+1;
     }
 
    /* public static void main(String[] args) {

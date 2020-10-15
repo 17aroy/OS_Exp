@@ -36,6 +36,7 @@ public class OS_UI extends JFrame{
         item11=new JMenuItem("打开(O)",KeyEvent.VK_O);
         item11.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
         item11.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 openTextFile();
@@ -44,6 +45,7 @@ public class OS_UI extends JFrame{
 
         item12=new JMenuItem("保存(S)",KeyEvent.VK_S);
         item12.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 savaTextFile();
@@ -53,11 +55,13 @@ public class OS_UI extends JFrame{
         item13=new JMenuItem("退出(X)",KeyEvent.VK_X);
         item13.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,ActionEvent.CTRL_MASK));
         item13.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);}}
         );
         item21=new JMenuItem("允许编辑");
         item21.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 jTextArea.setEditable(true);
@@ -65,6 +69,7 @@ public class OS_UI extends JFrame{
         });
         item22=new JMenuItem("禁止编辑");
         item22.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 jTextArea.setEditable(false);
@@ -88,6 +93,7 @@ public class OS_UI extends JFrame{
         jToolBar=new JToolBar();
         button1=new JButton("打开");
         button1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 openTextFile();
@@ -95,6 +101,7 @@ public class OS_UI extends JFrame{
         });
         button2=new JButton("保存");
         button2.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e)
             {
                 savaTextFile();
@@ -102,6 +109,7 @@ public class OS_UI extends JFrame{
         });
         button3=new JButton("退出");
         button3.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);}}
         );
