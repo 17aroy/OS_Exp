@@ -7,4 +7,4 @@
   
 实验二
   创建进程，显示进程状态转换
-  ![image](https://github.com/17aroy/OS_Exp/blob/master/image/process_UI.png)  
+ ![image](https://github.com/17aroy/OS_Exp/blob/master/image/process_UI.png)  
