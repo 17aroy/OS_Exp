@@ -47,8 +47,8 @@ public class Process_UI extends JFrame {
         jButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.printf("就绪队列\t");
-                psa.wireQueueData(psa.readyList);
+               /* System.out.printf("就绪队列\t");
+                psa.wireQueueData(psa.readyList);*/
                 for (int i = 0; i < 10; i++) {
                     for (int j = 0; j < 5; j++) {
                         tableValues[i][j]=" ";
@@ -64,8 +64,8 @@ public class Process_UI extends JFrame {
         jButton2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.printf("阻塞队列\t");
-                psa.wireQueueData(psa.blockList);
+               /* System.out.printf("阻塞队列\t");
+                psa.wireQueueData(psa.blockList);*/
                 for (int i = 0; i < 10; i++) {
                     for (int j = 0; j < 5; j++) {
                         tableValues[i][j]=" ";
@@ -80,23 +80,24 @@ public class Process_UI extends JFrame {
         jButton3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.printf("消亡队列\t");
-                psa.wireQueueData(psa.dieList);
+                /*System.out.printf("消亡队列\t");
+                psa.wireQueueData(psa.dieList);*/
                 for (int i = 0; i < 10; i++) {
                     for (int j = 0; j < 5; j++) {
                         tableValues[i][j]=" ";
                     }
                 }
-                jTable.repaint();                for (int i = 0; i < psa.dieList.size(); i++) {
+                jTable.repaint();
+                for (int i = 0; i < psa.dieList.size(); i++) {
                     tableValues[i]=psa.getListString(psa.dieList, i);
                 }
             }
         });
 
-
         jTable=new JTable(tableValues,columnNames);
         jScrollPane=new JScrollPane(jTable);
-        getContentPane().add(jScrollPane,BorderLayout.CENTER);
+        getContentPane().add(jScrollPane);
+
         this.setTitle("进程管理");
         this.setSize(500, 300);
         this.setVisible(true);

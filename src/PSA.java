@@ -7,6 +7,10 @@ public class PSA {
     ArrayList<PCB> readyList;
     ArrayList<PCB> blockList;
     ArrayList<PCB> dieList;
+    ArrayList<String[][]> readyRecord;
+    ArrayList<String[][]> blockRecord;
+    ArrayList<String[][]> dieRecoed;
+    int count;
 
     //创建进程和三个进程队列
     public PSA(){
@@ -14,6 +18,10 @@ public class PSA {
         setReadyList(new ArrayList<>());
         setBlockList(new ArrayList<>());
         setDieList(new ArrayList<>());
+        count=0;
+        readyRecord=new ArrayList<>();
+        blockRecord=new ArrayList<>();
+        dieRecoed=new ArrayList<>();
         start();
     }
 
@@ -98,7 +106,7 @@ public class PSA {
         if (!readyList.isEmpty()){
             readyRun();
         }
-        if (!blockList.isEmpty()){
+        if (!blockList.isEmpty()&&blockList.size()>1){
             addReady();
         }
         if (readyList.isEmpty()&&!blockList.isEmpty()){
