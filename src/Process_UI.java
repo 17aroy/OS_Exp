@@ -1,11 +1,15 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Process_UI extends JFrame {
     JToolBar jToolBar;//工具条
-    JButton jButton1,jButton2,jButton3;
+    JButton jButton,jButton1,jButton2,jButton3;
     String[] columnNames;
     String[][] tableValues;
     JTable jTable;
@@ -19,24 +23,73 @@ public class Process_UI extends JFrame {
         jButton1=new JButton("就绪");
         jButton2=new JButton("阻塞");
         jButton3=new JButton("消亡");
+        jButton=new JButton("运行");
 
         jToolBar.add(jButton1);
         jToolBar.add(jButton2);
         jToolBar.add(jButton3);
+        jToolBar.add(jButton);
 
         psa=new PSA();
 
         this.add(jToolBar, BorderLayout.NORTH);	//添加工具条
 
         columnNames= new String[]{"名称", "PID","时间片", "优先级", "状态"};
-        /*tableValues=new String[][]{{"A","2","22","222","T"},{"B","3","33","333","F"},{"C","4","44","444","T"}};*/
         tableValues=new String[10][5];
+
+        jButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                psa.run();
+            }
+        });
 
         jButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                run(psa);
-                writeReadyData(psa);
+                System.out.printf("就绪队列\t");
+                psa.wireQueueData(psa.readyList);
+                for (int i = 0; i < 10; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        tableValues[i][j]=" ";
+                    }
+                }
+                jTable.repaint();
+                for (int i = 0; i < psa.readyList.size(); i++) {
+                    tableValues[i]= psa.getListString(psa.readyList, i);
+                }
+
+            }
+        });
+        jButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.printf("阻塞队列\t");
+                psa.wireQueueData(psa.blockList);
+                for (int i = 0; i < 10; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        tableValues[i][j]=" ";
+                    }
+                }
+                jTable.repaint();
+                for (int i = 0; i < psa.blockList.size(); i++) {
+                    tableValues[i]= psa.getListString(psa.blockList, i);
+                }
+            }
+        });
+        jButton3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.printf("消亡队列\t");
+                psa.wireQueueData(psa.dieList);
+                for (int i = 0; i < 10; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        tableValues[i][j]=" ";
+                    }
+                }
+                jTable.repaint();                for (int i = 0; i < psa.dieList.size(); i++) {
+                    tableValues[i]=psa.getListString(psa.dieList, i);
+                }
             }
         });
 
@@ -49,25 +102,5 @@ public class Process_UI extends JFrame {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    }
-    public void run(PSA psa){
-        if (psa.readyList.isEmpty()&&psa.readyList.get(0).runTime==0){
-            psa.addDie();
-        } else if (!psa.readyList.isEmpty()&&psa.readyList.get(0).state==1){
-            psa.readyRun();
-        } else {
-            psa.addBlock();
-        }
-        if (!psa.blockList.isEmpty()){
-            psa.addReady();
-        }
-    }
-
-    public void writeReadyData(PSA psa){
-        for (int i = 0; i < psa.readyList.size(); i++) {
-            tableValues[i]= psa.getReadyString(i);
-            System.out.println(psa.readyList.size());
-            System.out.println(psa.getReadyString(i));
-        }
     }
 }

@@ -25,7 +25,7 @@ public class PSA {
         this.pcbs=pcbs;
 
         for (int i = 0; i < 10; i++) {
-            pcbs[i]=new PCB(i,"进程"+String.valueOf(i),new Random().nextInt(2)+1,new Random().nextInt(5)+1,new Random().nextInt(10)+5);
+            pcbs[i]=new PCB(i,"进程"+String.valueOf(i),2,new Random().nextInt(5)+1,new Random().nextInt(10)+5);
         }
         Comparator cmp=new pcbComparator();
         Arrays.sort(pcbs,cmp);
@@ -57,47 +57,83 @@ public class PSA {
 
     public void start(){
         for (int i = 0; i < 10; i++) {
-            if (pcbs[i].state==1) {
-                readyList.add(pcbs[i]);
-            } else {
-                blockList.add(pcbs[i]);
-            }
+            readyList.add(pcbs[i]);
         }
-
     }
-    public void readyRun(){
-        readyList.get(0).priority--;
-        readyList.get(0).runTime--;
-        readyList.get(0).state=new Random().nextInt(2)+1;
+
+    public void addBlock(){
+        blockList.add(readyList.get(0));
+        readyList.remove(0);
+        listSort(blockList);
     }
 
     public void addReady(){
-        if (blockList.get(0).state==1) {
+        blockList.get(0).state=new Random().nextInt(2)+1;
+        if (blockList.get(0).state==2) {
+            readyList.add(blockList.get(0));
+            blockList.remove(0);
+            listSort(readyList);
+        }
+    }
+
+    public void addDie(){
+        readyList.get(0).state=0;
+        dieList.add(readyList.get(0));
+        readyList.remove(0);
+    }
+    public void readyRun(){
+        readyList.get(0).runTime--;
+        readyList.get(0).priority--;
+        if (readyList.get(0).runTime==0){
+            addDie();
+        } else {
+            readyList.get(0).state = new Random().nextInt(2) + 1;
+            if (readyList.get(0).state==1){
+                addBlock();
+            }
+        }
+    }
+
+    public void run(){
+        if (!readyList.isEmpty()){
+            readyRun();
+        }
+        if (!blockList.isEmpty()){
+            addReady();
+        }
+        if (readyList.isEmpty()&&!blockList.isEmpty()){
             readyList.add(blockList.get(0));
             blockList.remove(0);
         }
     }
 
-    public void addDie(){
-        dieList.add(readyList.get(0));
-        readyList.remove(0);
-    }
-    public void addBlock(){
-        readyList.get(0).state=new Random().nextInt(2)+1;
-        blockList.add(readyList.get(0));
-        readyList.remove(0);
-    }
-
-    public String[] getReadyString(int i){
-        String str[]=new String[]{readyList.get(i).processName, String.valueOf(readyList.get(i).pid), String.valueOf(readyList.get(i).runTime), String.valueOf(readyList.get(i).priority), String.valueOf(readyList.get(i).state)};
+    //返回队列对象的字符数组
+    public String[] getListString(ArrayList<PCB> list,int i){
+        String str[]=new String[]{list.get(i).processName, String.valueOf(list.get(i).pid), String.valueOf(list.get(i).runTime), String.valueOf(list.get(i).priority), (list.get(i).state==0?"die":((list.get(i).state==1)?"block":"ready"))};
         return str;
     }
 
-   /* public static void main(String[] args) {
-        new PSA().run();
-    }*/
 
-    //比较器，按照pcb对象优先级排序
+    //对3个队列进行优先级排序
+    public void listSort(ArrayList<PCB> list){
+        Collections.sort(list,new pcbComparator());
+    }
+
+    //返回队列对象的字符串
+    public String toString(ArrayList<PCB> list,int i){
+        return list.get(i).processName+"\t "+String.valueOf(list.get(i).pid)+"\t\t "+String.valueOf(list.get(i).runTime)+"\t\t "+String.valueOf(list.get(i).priority)+"\t\t "+String.valueOf(list.get(i).state);
+    }
+
+    //打印队列进程数据
+    public void wireQueueData(ArrayList<PCB> list){
+        System.out.println(list.size());
+        System.out.println("名称"+"\t\t"+"PID"+"\t\t"+"时间片"+"\t"+"优先级"+"\t"+"状态");
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(toString(list, i));
+        }
+    }
+
+    //比较器，对进程进行优先级排序
     class pcbComparator implements Comparator<PCB>{
         @Override
         public int compare(PCB o1,PCB o2) {
@@ -110,4 +146,5 @@ public class PSA {
             return x;
         }
     }
+
 }
