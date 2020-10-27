@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.*;
 
+/**
+ * @author 14146
+ */
 public class OS_UI extends JFrame{
     JMenuBar jMenuBar;//菜单栏
     JMenu menu1,menu2,menu3,menu4,menu5;//菜单项

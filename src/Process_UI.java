@@ -3,12 +3,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class Process_UI extends JFrame {
-    JToolBar jToolBar;//工具条
+    JToolBar jToolBar;
     JButton jButton,jButton1,jButton2,jButton3;
     String[] columnNames;
     String[][] tableValues;
@@ -32,7 +33,8 @@ public class Process_UI extends JFrame {
 
         psa=new PSA();
 
-        this.add(jToolBar, BorderLayout.NORTH);	//添加工具条
+        //添加工具条
+        this.add(jToolBar, BorderLayout.NORTH);
 
         columnNames= new String[]{"名称", "PID","时间片", "优先级", "状态"};
         tableValues=new String[10][5];
@@ -41,15 +43,8 @@ public class Process_UI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 psa.run();
-            }
-        });
-
-        jButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               /* System.out.printf("就绪队列\t");
-                psa.wireQueueData(psa.readyList);*/
-                for (int i = 0; i < 10; i++) {
+                repaintData(1);
+               /* for (int i = 0; i < 10; i++) {
                     for (int j = 0; j < 5; j++) {
                         tableValues[i][j]=" ";
                     }
@@ -57,15 +52,31 @@ public class Process_UI extends JFrame {
                 jTable.repaint();
                 for (int i = 0; i < psa.readyList.size(); i++) {
                     tableValues[i]= psa.getListString(psa.readyList, i);
+                }*/
+            }
+        });
+
+        jButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                repaintData(1);
+                /*for (int i = 0; i < 10; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        tableValues[i][j]=" ";
+                    }
                 }
+                jTable.repaint();
+                for (int i = 0; i < psa.readyList.size(); i++) {
+                    tableValues[i]= psa.getListString(psa.readyList, i);
+                }*/
 
             }
         });
         jButton2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               /* System.out.printf("阻塞队列\t");
-                psa.wireQueueData(psa.blockList);*/
+                repaintData(2);
+              /*
                 for (int i = 0; i < 10; i++) {
                     for (int j = 0; j < 5; j++) {
                         tableValues[i][j]=" ";
@@ -74,15 +85,14 @@ public class Process_UI extends JFrame {
                 jTable.repaint();
                 for (int i = 0; i < psa.blockList.size(); i++) {
                     tableValues[i]= psa.getListString(psa.blockList, i);
-                }
+                }*/
             }
         });
         jButton3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*System.out.printf("消亡队列\t");
-                psa.wireQueueData(psa.dieList);*/
-                for (int i = 0; i < 10; i++) {
+                repaintData(3);
+               /* for (int i = 0; i < 10; i++) {
                     for (int j = 0; j < 5; j++) {
                         tableValues[i][j]=" ";
                     }
@@ -90,7 +100,7 @@ public class Process_UI extends JFrame {
                 jTable.repaint();
                 for (int i = 0; i < psa.dieList.size(); i++) {
                     tableValues[i]=psa.getListString(psa.dieList, i);
-                }
+                }*/
             }
         });
 
@@ -103,5 +113,27 @@ public class Process_UI extends JFrame {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+    }
+
+    public void repaintData(int num){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 5; j++) {
+                tableValues[i][j]=" ";
+            }
+        }
+        jTable.repaint();
+        if (num==1){
+            for (int i = 0; i < psa.readyList.size(); i++) {
+                tableValues[i]= psa.getListString(psa.readyList, i);
+            }
+        } else if (num==2){
+            for (int i = 0; i < psa.blockList.size(); i++) {
+                tableValues[i]=psa.getListString(psa.blockList, i);
+            }
+        } else {
+            for (int i = 0; i < psa.dieList.size(); i++) {
+                tableValues[i]=psa.getListString(psa.dieList, i);
+            }
+        }
     }
 }
