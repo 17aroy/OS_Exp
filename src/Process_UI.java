@@ -44,15 +44,6 @@ public class Process_UI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 psa.run();
                 repaintData(1);
-               /* for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 5; j++) {
-                        tableValues[i][j]=" ";
-                    }
-                }
-                jTable.repaint();
-                for (int i = 0; i < psa.readyList.size(); i++) {
-                    tableValues[i]= psa.getListString(psa.readyList, i);
-                }*/
             }
         });
 
@@ -60,47 +51,18 @@ public class Process_UI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 repaintData(1);
-                /*for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 5; j++) {
-                        tableValues[i][j]=" ";
-                    }
-                }
-                jTable.repaint();
-                for (int i = 0; i < psa.readyList.size(); i++) {
-                    tableValues[i]= psa.getListString(psa.readyList, i);
-                }*/
-
             }
         });
         jButton2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 repaintData(2);
-              /*
-                for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 5; j++) {
-                        tableValues[i][j]=" ";
-                    }
-                }
-                jTable.repaint();
-                for (int i = 0; i < psa.blockList.size(); i++) {
-                    tableValues[i]= psa.getListString(psa.blockList, i);
-                }*/
             }
         });
         jButton3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 repaintData(3);
-               /* for (int i = 0; i < 10; i++) {
-                    for (int j = 0; j < 5; j++) {
-                        tableValues[i][j]=" ";
-                    }
-                }
-                jTable.repaint();
-                for (int i = 0; i < psa.dieList.size(); i++) {
-                    tableValues[i]=psa.getListString(psa.dieList, i);
-                }*/
             }
         });
 

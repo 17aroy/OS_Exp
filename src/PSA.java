@@ -89,6 +89,8 @@ public class PSA {
         dieList.add(readyList.get(0));
         readyList.remove(0);
     }
+
+    //执行进程
     public void readyRun(){
         readyList.get(0).runTime--;
         readyList.get(0).priority--;
@@ -102,6 +104,7 @@ public class PSA {
         }
     }
 
+    //运行一次时间片
     public void run(){
         if (!readyList.isEmpty()){
             readyRun();
